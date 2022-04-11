@@ -35,7 +35,6 @@ router.beforeEach( async ( to, from, next ) => {
       } );
     } else {
       try {
-        console.log( 'dale' )
         SessionService.defaults.headers[ 'authorization' ] = token;
         const { data } = await SessionService.get( 'session' );
         store.dispatch( 'setUserInfo', data )

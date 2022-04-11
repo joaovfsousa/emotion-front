@@ -1,16 +1,19 @@
 <template>
 <div class="container">
+  <span class="error-message" v-if="errorMessage !== null">{{errorMessage}}</span>
   <input
     :value="username"
     @input="event => username = event.target.value"
     type="text"
-    placeholder="Nome de usuário"
+    placeholder="Nome de usuário" 
+    @keyup.enter="login"
   />
   <input
     :value="password"
     @input="event => password = event.target.value"
     type="password"
     placeholder="Senha"
+    @keyup.enter="login"
   />
   <button @click="login">Logar</button>
 </div>
@@ -21,13 +24,22 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      errorMessage: null
     }
   },
   methods: {
     async login(){
-      await this.$store.dispatch('login', {username: this.username, password: this.password})
-      this.$router.push({path:'/'})
+      try {
+        await this.$store.dispatch('login', {username: this.username, password: this.password})
+        this.$router.push({path:'/'})
+      } catch(err) {
+        if(err.response?.data) {
+          this.errorMessage = err.response.data.message
+        } else {
+          this.errorMessage = "Não foi possível fazer o seu login, tente mais tarde"
+        }
+      }
     }
   }
 }
@@ -41,8 +53,18 @@ export default {
   height: 100%;
   align-items: center;
   justify-content: center;
+  .error-message {
+    max-width: 190px;
+    margin-bottom: 8px;
+    border: 1px solid red;
+    background-color: #ff000022;
+    border-radius: 10px;
+    color: grey;
+    padding: 2px 8px;
+  }
   input {
     margin-bottom: 16px;
+    width: 200px;
   }
   button {
     background-color: #0095ff;
