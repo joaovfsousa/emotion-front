@@ -13,7 +13,7 @@ const store = createStore( {
   },
   actions: {
     async login ( { commit }, { username, password } ) {
-      const { data: { token } } = LoginService.post( 'login', {
+      const { data: { token } } = await LoginService.post( 'login', {
         username, password
       } )
       commit( 'setToken', token )

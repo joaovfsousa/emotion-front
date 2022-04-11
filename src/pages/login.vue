@@ -27,7 +27,7 @@ export default {
   methods: {
     async login(){
       await this.$store.dispatch('login', {username: this.username, password: this.password})
-      this.$route.push('/')
+      this.$router.push({path:'/'})
     }
   }
 }
