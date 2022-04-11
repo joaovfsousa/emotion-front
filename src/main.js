@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import VueLoading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 import store from './store'
 
 import App from './App.vue'
@@ -24,7 +26,7 @@ const router = createRouter( {
   routes,
 } )
 
-createApp( App ).use( store ).use( router ).mount( '#app' )
+createApp( App ).use( VueLoading ).use( store ).use( router ).mount( '#app' )
 
 router.beforeEach( async ( to, from, next ) => {
   const token = sessionStorage.getItem( 'token' )

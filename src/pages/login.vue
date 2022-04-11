@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     async login(){
+      const loader = this.$loading.show({container: null, color: '#0095ff', loader: 'spinner'})
       try {
         await this.$store.dispatch('login', {username: this.username, password: this.password})
         this.$router.push({path:'/'})
@@ -39,6 +40,8 @@ export default {
         } else {
           this.errorMessage = "Não foi possível fazer o seu login, tente mais tarde"
         }
+      } finally {
+        loader.hide()
       }
     }
   }
