@@ -18,12 +18,23 @@ const store = createStore( {
       } )
       commit( 'setToken', token )
       sessionStorage.setItem( 'token', token )
+    },
+    setUserInfo ( { commit }, userInfo ) {
+      commit( 'setUserInfo', userInfo )
     }
   },
   mutations: {
     setToken ( state, token ) {
       state.token = token
+    },
+    setUserInfo ( state, { username, name, id } ) {
+      state.username = username
+      state.name = name
+      state.userId = id
     }
+  },
+  getters: {
+    name: state => state.name
   }
 } )
 
